@@ -70,26 +70,53 @@ const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
 // Professional Component Architecture
 // ====================================================================
 
-const AppHeader = () => (
-  <header style={styles.header}>
-    <div style={styles.container}>
-      <nav style={styles.nav}>
-        <div style={styles.logo}>
-          <span style={styles.logoMain}>MODE</span>
-          <span style={styles.logoSub}>AR</span>
-        </div>
-        <ul style={styles.navList}>
-          <li><a href="#features" style={styles.navLink}>المميزات</a></li>
-          <li><a href="#download" style={styles.navLink}>التحميل</a></li>
-          <li><a href="#contact" style={styles.navLink}>تواصل معنا</a></li>
-        </ul>
-        <a href="/mode-ar.exe" download="MODE-AR.exe" style={styles.headerButton}>
-          حمّل الآن
-        </a>
-      </nav>
-    </div>
-  </header>
-)
+const AppHeader = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
+
+  return (
+    <header style={styles.header}>
+      <div style={styles.container}>
+        <nav style={styles.nav}>
+          <div style={styles.logo}>
+            <span style={styles.logoMain}>MODE</span>
+            <span style={styles.logoSub}>AR</span>
+          </div>
+          
+          {/* Desktop Menu */}
+          <ul style={styles.navList}>
+            <li><a href="#features" style={styles.navLink}>المميزات</a></li>
+            <li><a href="#download" style={styles.navLink}>التحميل</a></li>
+            <li><a href="#contact" style={styles.navLink}>تواصل معنا</a></li>
+          </ul>
+          
+          {/* Mobile Menu Button */}
+          <button 
+            style={styles.mobileMenuButton}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="فتح القائمة"
+          >
+            <span style={{...styles.hamburgerLine, transform: mobileMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'}}></span>
+            <span style={{...styles.hamburgerLine, opacity: mobileMenuOpen ? 0 : 1}}></span>
+            <span style={{...styles.hamburgerLine, transform: mobileMenuOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none'}}></span>
+          </button>
+          
+          <a href="/mode-ar.exe" download="MODE-AR.exe" style={styles.headerButton}>
+            حمّل الآن
+          </a>
+        </nav>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div style={styles.mobileMenu}>
+            <a href="#features" style={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>المميزات</a>
+            <a href="#download" style={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>التحميل</a>
+            <a href="#contact" style={styles.mobileNavLink} onClick={() => setMobileMenuOpen(false)}>تواصل معنا</a>
+          </div>
+        )}
+      </div>
+    </header>
+  )
+}
 
 const HeroSection = () => (
   <section id="home" style={styles.heroSection}>
@@ -414,6 +441,9 @@ const styles = {
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 24px',
+    '@media (max-width: 768px)': {
+      padding: '0 16px',
+    },
   },
 
   // Header Styles
@@ -427,12 +457,19 @@ const styles = {
     backdropFilter: 'blur(20px)',
     borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
     boxShadow: '0 2px 20px rgba(0, 0, 0, 0.04)',
+    '@media (max-width: 768px)': {
+      padding: '12px 0',
+    },
   },
 
   nav: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+      gap: '16px',
+    },
   },
 
   logo: {
@@ -456,6 +493,9 @@ const styles = {
     listStyle: 'none',
     margin: 0,
     padding: 0,
+    '@media (max-width: 768px)': {
+      display: 'none',
+    },
   },
 
   navLink: {
@@ -480,6 +520,59 @@ const styles = {
     fontWeight: 600,
     textDecoration: 'none',
     transition: 'all 0.3s ease',
+    '@media (max-width: 768px)': {
+      display: 'none',
+    },
+  } as React.CSSProperties,
+
+  // Mobile Menu Styles
+  mobileMenuButton: {
+    display: 'none',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    width: '30px',
+    height: '30px',
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    padding: '0',
+    '@media (max-width: 768px)': {
+      display: 'flex',
+    },
+  } as React.CSSProperties,
+
+  hamburgerLine: {
+    width: '100%',
+    height: '3px',
+    backgroundColor: '#3B4F63',
+    borderRadius: '2px',
+    transition: 'all 0.3s ease',
+  } as React.CSSProperties,
+
+  mobileMenu: {
+    display: 'block',
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(245, 242, 232, 0.98)',
+    backdropFilter: 'blur(20px)',
+    borderTop: '1px solid rgba(0, 0, 0, 0.08)',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+    padding: '20px 0',
+    zIndex: 999,
+  } as React.CSSProperties,
+
+  mobileNavLink: {
+    display: 'block',
+    padding: '15px 24px',
+    fontSize: '1.1rem',
+    fontWeight: 500,
+    color: '#475569',
+    textDecoration: 'none',
+    textAlign: 'center',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
+    transition: 'all 0.3s ease',
   } as React.CSSProperties,
 
   // Hero Section
@@ -487,6 +580,9 @@ const styles = {
     padding: '100px 0',
     backgroundColor: '#F5F2E8',
     background: 'linear-gradient(135deg, #F7F4EE 0%, #F5F2E8 100%)',
+    '@media (max-width: 768px)': {
+      padding: '60px 0',
+    },
   },
 
   heroContainer: {
@@ -496,6 +592,12 @@ const styles = {
     gap: '80px',
     paddingTop: '0px',
     marginTop: '-60px',
+    '@media (max-width: 768px)': {
+      gridTemplateColumns: '1fr',
+      gap: '40px',
+      textAlign: 'center',
+      marginTop: '0',
+    },
   },
 
   heroText: {
@@ -522,6 +624,13 @@ const styles = {
     lineHeight: 1.2,
     marginBottom: '24px',
     letterSpacing: '-0.03em',
+    '@media (max-width: 768px)': {
+      fontSize: '2.5rem',
+      lineHeight: 1.3,
+    },
+    '@media (max-width: 480px)': {
+      fontSize: '2rem',
+    },
   },
 
   heroTitleAccent: {
@@ -558,6 +667,10 @@ const styles = {
     display: 'flex',
     gap: '16px',
     flexWrap: 'wrap' as const,
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
   },
 
   benefitsList: {
@@ -598,6 +711,12 @@ const styles = {
     textDecoration: 'none',
     boxShadow: '0 10px 40px rgba(59, 79, 99, 0.25)',
     transition: 'all 0.3s ease',
+    '@media (max-width: 768px)': {
+      width: '100%',
+      justifyContent: 'center',
+      padding: '18px 24px',
+      fontSize: '1rem',
+    },
   } as React.CSSProperties,
 
   buttonSecondary: {
@@ -613,6 +732,12 @@ const styles = {
     fontWeight: 600,
     textDecoration: 'none',
     transition: 'all 0.3s ease',
+    '@media (max-width: 768px)': {
+      width: '100%',
+      justifyContent: 'center',
+      padding: '18px 24px',
+      fontSize: '1rem',
+    },
   } as React.CSSProperties,
 
   heroImageContainer: {
@@ -624,6 +749,11 @@ const styles = {
     background: 'none',
     border: 'none',
     marginTop: '20px',
+    '@media (max-width: 768px)': {
+      order: -1,
+      marginTop: '0',
+      marginBottom: '20px',
+    },
   },
 
   heroImageWrapper: {
@@ -645,12 +775,21 @@ const styles = {
     border: 'none',
     padding: 0,
     margin: 0,
+    '@media (max-width: 768px)': {
+      width: '280px',
+    },
+    '@media (max-width: 480px)': {
+      width: '240px',
+    },
   },
 
   // Video Section
   videoSection: {
     padding: '80px 0',
     backgroundColor: '#F5F2E8',
+    '@media (max-width: 768px)': {
+      padding: '60px 0',
+    },
   },
 
   videoContainer: {
@@ -664,6 +803,11 @@ const styles = {
     boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
     background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
     padding: '4px',
+    '@media (max-width: 768px)': {
+      borderRadius: '12px',
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.15)',
+      margin: '0 16px',
+    },
   },
 
   videoWrapper: {
@@ -677,6 +821,9 @@ const styles = {
     borderRadius: '16px',
     backgroundColor: '#000000',
     outline: 'none',
+    '@media (max-width: 768px)': {
+      borderRadius: '8px',
+    },
   },
 
   unmuteButton: {
@@ -700,6 +847,9 @@ const styles = {
   featuresSection: {
     padding: '100px 0',
     backgroundColor: '#F0ECE1',
+    '@media (max-width: 768px)': {
+      padding: '60px 0',
+    },
   },
 
   sectionHeader: {
@@ -713,6 +863,12 @@ const styles = {
     color: '#1A202C',
     marginBottom: '16px',
     letterSpacing: '-0.02em',
+    '@media (max-width: 768px)': {
+      fontSize: '2.2rem',
+    },
+    '@media (max-width: 480px)': {
+      fontSize: '1.8rem',
+    },
   },
 
   sectionSubtitle: {
@@ -727,6 +883,10 @@ const styles = {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
     gap: '40px',
+    '@media (max-width: 768px)': {
+      gridTemplateColumns: '1fr',
+      gap: '24px',
+    },
   },
 
   featureCard: {
@@ -770,6 +930,9 @@ const styles = {
     padding: '100px 0',
     background: 'linear-gradient(135deg, #1A202C 0%, #2D3748 100%)',
     color: '#F5F5DC',
+    '@media (max-width: 768px)': {
+      padding: '60px 0',
+    },
   },
 
   downloadTitle: {
@@ -808,6 +971,9 @@ const styles = {
   contactSection: {
     padding: '100px 0',
     backgroundColor: '#F5F2E8',
+    '@media (max-width: 768px)': {
+      padding: '60px 0',
+    },
   },
 
   contactContent: {
@@ -818,6 +984,11 @@ const styles = {
     padding: '60px',
     borderRadius: '20px',
     border: '1px solid #E8E3D6',
+    '@media (max-width: 768px)': {
+      gridTemplateColumns: '1fr',
+      gap: '40px',
+      padding: '40px 24px',
+    },
   },
 
   contactInfo: {},
@@ -863,6 +1034,11 @@ const styles = {
     display: 'flex',
     gap: '16px',
     justifyContent: 'center',
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+      gap: '12px',
+      alignItems: 'center',
+    },
   },
 
   socialInstagram: {
@@ -904,6 +1080,10 @@ const styles = {
     alignItems: 'center',
     flexWrap: 'wrap' as const,
     gap: '16px',
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+      textAlign: 'center',
+    },
   },
 
   footerCopyright: {
@@ -921,5 +1101,29 @@ const styles = {
     textDecoration: 'none',
     fontWeight: 600,
     transition: 'color 0.3s ease',
+  } as React.CSSProperties,
+
+  // Fixed Mobile Download Button
+  fixedMobileButton: {
+    display: 'none',
+    position: 'fixed',
+    bottom: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 1000,
+    padding: '14px 28px',
+    borderRadius: '50px',
+    background: 'linear-gradient(135deg, #3B4F63 0%, #455A6B 100%)',
+    color: '#FFFFFF',
+    fontSize: '1rem',
+    fontWeight: 600,
+    textDecoration: 'none',
+    boxShadow: '0 8px 32px rgba(59, 79, 99, 0.4)',
+    alignItems: 'center',
+    gap: '8px',
+    transition: 'all 0.3s ease',
+    '@media (max-width: 768px)': {
+      display: 'flex',
+    },
   } as React.CSSProperties,
 };// <-- تم إضافة قوس الإغلاق هنا

@@ -29,6 +29,7 @@ ul, ol {
 a {
   text-decoration: none;
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button {
@@ -36,9 +37,16 @@ button {
   background: none;
   cursor: pointer;
   font-family: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+video {
   max-width: 100%;
   height: auto;
 }
@@ -82,7 +90,32 @@ img {
 /* Responsive breakpoints */
 @media (max-width: 768px) {
   body {
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  /* تحسينات الجوال */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* منع التكبير عند النقر على inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    font-size: 16px !important;
+  }
+  
+  /* تحسين التمرير */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* تحسين الأزرار للمس */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
