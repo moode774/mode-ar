@@ -7,6 +7,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
@@ -19,6 +20,8 @@ body {
   line-height: 1.7;
   font-size: 16px;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Remove default styles */
@@ -89,14 +92,33 @@ video {
 
 /* Responsive breakpoints */
 @media (max-width: 768px) {
-  body {
-    font-size: 16px;
-    line-height: 1.6;
+  html {
+    font-size: 14px;
   }
   
-  /* تحسينات الجوال */
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  /* تحسينات الجوال المهمة */
   * {
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* السماح بتحديد النص فقط */
+  p, span, h1, h2, h3, h4, h5, h6 {
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
   }
   
   /* منع التكبير عند النقر على inputs */
@@ -105,17 +127,27 @@ video {
   input[type="password"],
   textarea {
     font-size: 16px !important;
+    zoom: 1;
   }
   
   /* تحسين التمرير */
   html {
     -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
   
   /* تحسين الأزرار للمس */
   button, a {
     min-height: 44px;
     min-width: 44px;
+    touch-action: manipulation;
+  }
+  
+  /* إصلاح عرض الصفحة */
+  body {
+    width: 100vw;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 }
 

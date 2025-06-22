@@ -435,7 +435,10 @@ const styles = {
     margin: 0,
     lineHeight: 1.7,
     minHeight: '100vh',
-  },
+    width: '100%',
+    maxWidth: '100vw',
+    overflowX: 'hidden' as const,
+  } as React.CSSProperties,
 
   container: {
     maxWidth: '1200px',
@@ -592,11 +595,14 @@ const styles = {
     gap: '80px',
     paddingTop: '0px',
     marginTop: '-60px',
+    width: '100%',
+    maxWidth: '100%',
     '@media (max-width: 768px)': {
-      gridTemplateColumns: '1fr',
-      gap: '40px',
+      display: 'block',
+      gap: '20px',
       textAlign: 'center',
       marginTop: '0',
+      padding: '20px 10px',
     },
   },
 
@@ -624,14 +630,21 @@ const styles = {
     lineHeight: 1.2,
     marginBottom: '24px',
     letterSpacing: '-0.03em',
+    wordWrap: 'break-word' as const,
+    overflowWrap: 'break-word' as const,
+    hyphens: 'auto' as const,
     '@media (max-width: 768px)': {
-      fontSize: '2.5rem',
+      fontSize: '1.8rem',
       lineHeight: 1.3,
+      textAlign: 'center',
+      padding: '0 10px',
+      wordBreak: 'normal',
     },
     '@media (max-width: 480px)': {
-      fontSize: '2rem',
+      fontSize: '1.5rem',
+      padding: '0 5px',
     },
-  },
+  } as React.CSSProperties,
 
   heroTitleAccent: {
     background: 'linear-gradient(135deg, #3B4F63 0%, #455A6B 100%)',
